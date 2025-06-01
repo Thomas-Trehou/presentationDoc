@@ -39,10 +39,10 @@
   },
   "components": {
     "schemas": {
-      "$ref": "./common-partials/schemas.json"
+      "$ref": "common-partials/schemas.json#"
     },
     "responses": {
-      "$ref": "./common-partials/responses.json"
+      "$ref": "common-partials/responses.json#"
     }
   }
 }
