@@ -1,0 +1,25 @@
+{
+  "name": "presentationdoc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run bundle && node index.js",
+    "dev": "npm run bundle && nodemon index.js",
+    "validate": "swagger-cli validate openapi/v1/openapi.json",
+    "bundle": "swagger-cli bundle openapi/v1/openapi.json --outfile openapi/v1/openapi_bundled.json --type json",
+    "lint:spectral": "spectral lint openapi/v1/openapi.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apidevtools/swagger-cli": "^4.0.4",
+    "express": "^4.19.2",
+    "swagger-ui-express": "^5.0.0",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@stoplight/spectral-cli": "^6.11.0",
+    "nodemon": "^3.1.0"
+  }
+}

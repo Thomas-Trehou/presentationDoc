@@ -1,0 +1,47 @@
+{
+  "MauvaiseRequete": {
+    "description": "Les données fournies dans la requête sont invalides.",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "./schemas.json#/Erreur"
+        },
+        "example": {
+          "code": 400,
+          "message": "Le champ 'titre' ne peut pas être vide.",
+          "timestamp": "2024-06-01T12:34:56Z"
+        }
+      }
+    }
+  },
+  "NonTrouve": {
+    "description": "La ressource demandée n'a pas été trouvée.",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "./schemas.json#/Erreur"
+        },
+        "example": {
+          "code": 404,
+          "message": "Livre avec l'ID 999 non trouvé.",
+          "timestamp": "2024-06-01T12:34:56Z"
+        }
+      }
+    }
+  },
+  "ErreurInterneServeur": {
+    "description": "Une erreur inattendue s'est produite sur le serveur.",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "./schemas.json#/Erreur"
+        },
+        "example": {
+          "code": 500,
+          "message": "Erreur interne du serveur. Veuillez réessayer plus tard.",
+          "timestamp": "2024-06-01T12:34:56Z"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "/livres": {
+    "get": {
+      "tags": ["Livres"],
+      "summary": "Lister tous les livres",
+      "operationId": "listerTousLesLivres",
+      "description": "Récupère une liste de tous les livres disponibles.",
+      "responses": {
+        "200": {
+          "description": "Une liste de livres.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "./schemas.json#/Livre"
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "$ref": "./responses.json#/ErreurInterneServeur"
+        }
+      }
+    },
+    "post": {
+      "tags": ["Livres"],
+      "summary": "Ajouter un nouveau livre",
+      "operationId": "ajouterLivre",
+      "description": "Crée un nouveau livre dans la collection.",
+      "requestBody": {
+        "description": "Objet Livre à ajouter à la collection.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./schemas.json#/LivreCreation"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Livre créé avec succès.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./schemas.json#/Livre"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "./responses.json#/MauvaiseRequete"
+        },
+        "500": {
+          "$ref": "./responses.json#/ErreurInterneServeur"
+        }
+      }
+    }
+  },
+  "/livres/{livreId}": {
+    "get": {
+      "tags": ["Livres"],
+      "summary": "Trouver un livre par son ID",
+      "operationId": "trouverLivreParId",
+      "description": "Récupère un seul livre par son identifiant unique.",
+      "parameters": [
+        {
+          "name": "livreId",
+          "in": "path",
+          "required": true,
+          "description": "ID du livre à récupérer.",
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Livre trouvé.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./schemas.json#/Livre"
+              }
+            }
+          }
+        },
+        "404": {
+          "$ref": "./responses.json#/NonTrouve"
+        },
+        "500": {
+          "$ref": "./responses.json#/ErreurInterneServeur"
+        }
+      }
+    },
+    "put": {
+      "tags": ["Livres"],
+      "summary": "Mettre à jour un livre existant",
+      "operationId": "mettreAJourLivre",
+      "description": "Modifie un livre existant dans la collection.",
+      "parameters": [
+        {
+          "name": "livreId",
+          "in": "path",
+          "required": true,
+          "description": "ID du livre à mettre à jour.",
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          }
+        }
+      ],
+      "requestBody": {
+        "description": "Objet Livre avec les informations mises à jour.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./schemas.json#/LivreCreation"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Livre mis à jour avec succès.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./schemas.json#/Livre"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "./responses.json#/MauvaiseRequete"
+        },
+        "404": {
+          "$ref": "./responses.json#/NonTrouve"
+        },
+        "500": {
+          "$ref": "./responses.json#/ErreurInterneServeur"
+        }
+      }
+    },
+    "delete": {
+      "tags": ["Livres"],
+      "summary": "Supprimer un livre",
+      "operationId": "supprimerLivre",
+      "description": "Supprime un livre de la collection par son ID.",
+      "parameters": [
+        {
+          "name": "livreId",
+          "in": "path",
+          "required": true,
+          "description": "ID du livre à supprimer.",
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "Livre supprimé avec succès."
+        },
+        "404": {
+          "$ref": "./responses.json#/NonTrouve"
+        },
+        "500": {
+          "$ref": "./responses.json#/ErreurInterneServeur"
+        }
+      }
+    }
+  }
+}

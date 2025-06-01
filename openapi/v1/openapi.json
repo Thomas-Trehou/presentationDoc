@@ -1,0 +1,43 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Gestion de Livres",
+    "version": "v1.0.0",
+    "description": "Une API simple pour gérer une collection de livres.\nCette spécification est la source de vérité pour les contrats d'API.",
+    "contact": {
+      "name": "Équipe API",
+      "email": "api-dev@example.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api/v1",
+      "description": "Serveur de développement local de l'API"
+    },
+    {
+      "url": "https://api.example.com/api/v1",
+      "description": "Serveur de production de l'API"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Livres",
+      "description": "Opérations relatives aux livres"
+    }
+  ],
+  "paths": {
+    "$ref": "./common-partials/paths.json"
+  },
+  "components": {
+    "schemas": {
+      "$ref": "./common-partials/schemas.json"
+    },
+    "responses": {
+      "$ref": "./common-partials/responses.json"
+    }
+  }
+}

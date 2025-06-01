@@ -1,0 +1,79 @@
+{
+  "Livre": {
+    "type": "object",
+    "required": ["id", "titre", "auteur"],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64",
+        "description": "Identifiant unique généré pour le livre.",
+        "example": 101,
+        "readOnly": true
+      },
+      "titre": {
+        "type": "string",
+        "description": "Le titre du livre.",
+        "example": "Le Guide du voyageur galactique"
+      },
+      "auteur": {
+        "type": "string",
+        "description": "L'auteur du livre.",
+        "example": "Douglas Adams"
+      },
+      "anneePublication": {
+        "type": "integer",
+        "format": "int32",
+        "description": "Année de publication du livre.",
+        "example": 1979
+      },
+      "isbn": {
+        "type": "string",
+        "description": "Numéro ISBN du livre (optionnel).",
+        "example": "978-2070415010"
+      }
+    }
+  },
+  "LivreCreation": {
+    "type": "object",
+    "required": ["titre", "auteur"],
+    "properties": {
+      "titre": {
+        "type": "string",
+        "description": "Le titre du livre.",
+        "example": "Dune"
+      },
+      "auteur": {
+        "type": "string",
+        "description": "L'auteur du livre.",
+        "example": "Frank Herbert"
+      },
+      "anneePublication": {
+        "type": "integer",
+        "format": "int32",
+        "description": "Année de publication du livre.",
+        "example": 1965
+      },
+      "isbn": {
+        "type": "string",
+        "description": "Numéro ISBN du livre (optionnel).",
+        "example": "978-0441172719"
+      }
+    }
+  },
+  "Erreur": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "integer",
+        "format": "int32"
+      },
+      "message": {
+        "type": "string"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  }
+}
