@@ -1,0 +1,360 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Gestion de Livres",
+    "version": "v1.0.0",
+    "description": "Une API simple pour gérer une collection de livres.\nCette spécification est la source de vérité pour les contrats d'API.",
+    "contact": {
+      "name": "Équipe API",
+      "email": "api-dev@example.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api/v1",
+      "description": "Serveur de développement local de l'API"
+    },
+    {
+      "url": "https://api.example.com/api/v1",
+      "description": "Serveur de production de l'API"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Livres",
+      "description": "Opérations relatives aux livres"
+    }
+  ],
+  "paths": {
+    "/livres": {
+      "get": {
+        "tags": [
+          "Livres"
+        ],
+        "summary": "Lister tous les livres",
+        "operationId": "listerTousLesLivres",
+        "description": "Récupère une liste de tous les livres disponibles.",
+        "responses": {
+          "200": {
+            "description": "Une liste de livres.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Livre"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ErreurInterneServeur"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Livres"
+        ],
+        "summary": "Ajouter un nouveau livre",
+        "operationId": "ajouterLivre",
+        "description": "Crée un nouveau livre dans la collection.",
+        "requestBody": {
+          "description": "Objet Livre à ajouter à la collection.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LivreCreation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Livre créé avec succès.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Livre"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/MauvaiseRequete"
+          },
+          "500": {
+            "$ref": "#/components/responses/ErreurInterneServeur"
+          }
+        }
+      }
+    },
+    "/livres/{livreId}": {
+      "get": {
+        "tags": [
+          "Livres"
+        ],
+        "summary": "Trouver un livre par son ID",
+        "operationId": "trouverLivreParId",
+        "description": "Récupère un seul livre par son identifiant unique.",
+        "parameters": [
+          {
+            "name": "livreId",
+            "in": "path",
+            "required": true,
+            "description": "ID du livre à récupérer.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Livre trouvé.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Livre"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NonTrouve"
+          },
+          "500": {
+            "$ref": "#/components/responses/ErreurInterneServeur"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Livres"
+        ],
+        "summary": "Mettre à jour un livre existant",
+        "operationId": "mettreAJourLivre",
+        "description": "Modifie un livre existant dans la collection.",
+        "parameters": [
+          {
+            "name": "livreId",
+            "in": "path",
+            "required": true,
+            "description": "ID du livre à mettre à jour.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Objet Livre avec les informations mises à jour.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LivreCreation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Livre mis à jour avec succès.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Livre"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/MauvaiseRequete"
+          },
+          "404": {
+            "$ref": "#/components/responses/NonTrouve"
+          },
+          "500": {
+            "$ref": "#/components/responses/ErreurInterneServeur"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Livres"
+        ],
+        "summary": "Supprimer un livre",
+        "operationId": "supprimerLivre",
+        "description": "Supprime un livre de la collection par son ID.",
+        "parameters": [
+          {
+            "name": "livreId",
+            "in": "path",
+            "required": true,
+            "description": "ID du livre à supprimer.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Livre supprimé avec succès."
+          },
+          "404": {
+            "$ref": "#/components/responses/NonTrouve"
+          },
+          "500": {
+            "$ref": "#/components/responses/ErreurInterneServeur"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Livre": {
+        "type": "object",
+        "required": [
+          "id",
+          "titre",
+          "auteur"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identifiant unique généré pour le livre.",
+            "example": 101,
+            "readOnly": true
+          },
+          "titre": {
+            "type": "string",
+            "description": "Le titre du livre.",
+            "example": "Le Guide du voyageur galactique"
+          },
+          "auteur": {
+            "type": "string",
+            "description": "L'auteur du livre.",
+            "example": "Douglas Adams"
+          },
+          "anneePublication": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Année de publication du livre.",
+            "example": 1979
+          },
+          "isbn": {
+            "type": "string",
+            "description": "Numéro ISBN du livre (optionnel).",
+            "example": "978-2070415010"
+          }
+        }
+      },
+      "LivreCreation": {
+        "type": "object",
+        "required": [
+          "titre",
+          "auteur"
+        ],
+        "properties": {
+          "titre": {
+            "type": "string",
+            "description": "Le titre du livre.",
+            "example": "Dune"
+          },
+          "auteur": {
+            "type": "string",
+            "description": "L'auteur du livre.",
+            "example": "Frank Herbert"
+          },
+          "anneePublication": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Année de publication du livre.",
+            "example": 1965
+          },
+          "isbn": {
+            "type": "string",
+            "description": "Numéro ISBN du livre (optionnel).",
+            "example": "978-0441172719"
+          }
+        }
+      },
+      "Erreur": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "responses": {
+      "MauvaiseRequete": {
+        "description": "Les données fournies dans la requête sont invalides.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erreur"
+            },
+            "example": {
+              "code": 400,
+              "message": "Le champ 'titre' ne peut pas être vide.",
+              "timestamp": "2024-06-01T12:34:56Z"
+            }
+          }
+        }
+      },
+      "NonTrouve": {
+        "description": "La ressource demandée n'a pas été trouvée.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erreur"
+            },
+            "example": {
+              "code": 404,
+              "message": "Livre avec l'ID 999 non trouvé.",
+              "timestamp": "2024-06-01T12:34:56Z"
+            }
+          }
+        }
+      },
+      "ErreurInterneServeur": {
+        "description": "Une erreur inattendue s'est produite sur le serveur.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erreur"
+            },
+            "example": {
+              "code": 500,
+              "message": "Erreur interne du serveur. Veuillez réessayer plus tard.",
+              "timestamp": "2024-06-01T12:34:56Z"
+            }
+          }
+        }
+      }
+    }
+  }
+}
