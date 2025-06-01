@@ -30,7 +30,12 @@
     }
   ],
   "paths": {
-    "$ref": "./common-partials/paths.json"
+    "/livres": {
+      "$ref": "./common-partials/paths.json#/~1livres"
+    },
+    "/livres/{livreId}": {
+      "$ref": "./common-partials/paths.json#/~1livres~1{livreId}"
+    }
   },
   "components": {
     "schemas": {
