@@ -1,0 +1,85 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de la Taverne des Héroines et Héros d'APSIDE",
+    "description": "Une API pour gérer les fiches de personnages de vos campagnes D&D.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/personnages/{personnageId}": {
+      "get": {
+        "summary": "Consulter la fiche d'un personnage",
+        "description": "Retourne la fiche de personnage complète avec ses attributs et sa classe.",
+        "operationId": "getPersonnageById",
+        "parameters": [
+          {
+            "name": "personnageId",
+            "in": "path",
+            "required": true,
+            "description": "ID du personnage à consulter.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fiche de personnage trouvée.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonnageDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Personnage non trouvé dans cette campagne."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PersonnageDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "nom": {
+            "type": "string",
+            "example": "Gimli, fils de Glóin"
+          },
+          "race": {
+            "type": "string",
+            "enum": ["Nain", "Elfe", "Humain", "Halfelin", "Drakéide"]
+          },
+          "classe": {
+            "type": "string",
+            "enum": ["Guerrier", "Mage", "Voleur", "Clerc", "Rôdeur"]
+          },
+          "niveau": {
+            "type": "integer",
+            "example": 5
+          },
+          "attributs": {
+            "type": "object",
+            "properties": {
+              "force": { "type": "integer", "example": 18 },
+              "dexterite": { "type": "integer", "example": 12 },
+              "constitution": { "type": "integer", "example": 16 },
+              "intelligence": { "type": "integer", "example": 10 },
+              "sagesse": { "type": "integer", "example": 14 },
+              "charisme": { "type": "integer", "example": 8 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
